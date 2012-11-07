@@ -1,0 +1,29 @@
+@(account: Account, selectedServer: Server)
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInlineInput.render) } 
+
+
+@*layout(
+	title = "Confirm deleting " + selectedServer.name, 
+	historyBack = routes.Servers.show(account.hash, selectedServer.name)
+){
+*@
+	<div class="row">	
+		<span class="span12">
+			<div class="well">
+				<p>	
+					Are you sure you want to delete server "@selectedServer.name"?					
+				</p>
+				<a href="#@routes.Servers.show(account.hash, selectedServer.name)" class="btn btn-success btn-large" data-dismiss="modal" aria-hidden="true">Cancel</a>
+    			<a href="#@routes.Servers.delete(account.hash, selectedServer.name)" class="btn btn-primary btn-large">Delete</a>
+			</div>
+		</span>
+	</div>
+	<script type="text/javascript">
+		hashModule.pageTitle = 'Confirm deleting @selectedServer.name';
+		hashModule.historyBack = '@routes.Servers.show(account.hash, selectedServer.name)';
+	</script>
+@*
+}
+*@

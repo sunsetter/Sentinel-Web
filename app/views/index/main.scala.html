@@ -1,0 +1,140 @@
+@()
+@layout(title = "Sentinel Web"){
+<div class="row">
+
+	<span class="span12">
+		<div class="well">
+			<h1>Overview</h1>
+			<p>				
+				Sentinel is a small server monitoring application which
+				gets local system data like CPU and RAM usage, free disk space,
+				and send it to a Sentinel website, where it can be displayed in
+				detail. <br>
+				  Sentinel consists of two components: the Sentinel server agent, that gathers system information,
+				and the Sentinel website, where the agent sends all gathered logs. </p>
+				<img src="@routes.Assets.at("img/diagram8.png")" class="img-polaroid" width="400"> 
+				<img src="@routes.Assets.at("img/diagram7.png")" class="img-polaroid" width="400">
+				
+			<hr/>
+			<h1>Sentinel Web application</h1>
+			<p>
+			There are two ways of using Sentinel application. <br>
+			You can use this site to gather and display information from your servers. 
+			Or you can download and install copy of this site to your local server.
+			</p>
+			
+			<h3>1. Using this website.</h3>
+			<p> 
+				The easiest way. 
+				Just go to <a href="@routes.Accounts.showBlank()">new account page</a>, type name of your account and you will be 
+				redirected to your account page.<br> 
+				Don't forget to save the URL of your account, because this is the only way 
+				to reach it.
+			</p>
+			
+			<h3>2. Using own monitoring website.</h3>
+			<p> 
+				Alternatively, if you for some reasons don't wish to use Sentinel website,
+				For example some of your servers, that needs to be monitored, don't have Internet connection.
+				In this way instead of using Sentinel website, you can install own monitoring website.<br>
+				First install Play framework, according to the 
+				<a href="http://www.playframework.org/documentation/">manual</a>.				
+			</p>
+			<p>
+				Make a new mysql database with UTF8 encoding.
+			</p>
+			<p>
+				Download latest Sentinel Web from <a href="https://github.com/sunsetter/Sentinel-Web">github</a>.
+				Unpack it to any folder. 
+			<p>
+				Rename conf/application.conf.example to conf/application.conf 
+			</p>
+			<p>	
+				Change next line in application.conf with your database credentials:  
+				<pre> db.default.url="mysql://user:password@@host/dbname" </pre>				
+			</p>
+			<p>
+				Run sentinel with command: 
+				<pre> % play start</pre>
+				That's all. Your new Web application is ready and normally running on :9000 port.
+				Now you can proceed with creating account, described in chapter 1.
+			</p>
+			
+			<hr/>			
+			<h1 id="install_agent">Installing Sentinel server agent tool.</h1>
+			<p>
+				To run the Sentinel agent, you need 
+				<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java 6 or later</a>. 
+				If you are using MacOS, Java is built-in. If you are using Linux or Windows, just
+				download and install the latest Java.
+			</p> 
+			<p>
+				Download latest <a href="@routes.Assets.at("downloads/sentinel-agent-1.0.0.tar.gz")">Sentinel agent</a>
+				and extract it to any folder. 
+			</p>
+				
+			<h2>Running Sentinel agent</h2>
+			<p>
+				Normally, to make Sentinel agent send data to a Sentinel
+				website, you just need to run it with next arguments: 
+				<pre> % java -jar -Djava.library.path=./ sentinel.jar [OPTIONS...] </pre> 
+				Required options: 
+				<dl> 
+					<dt>-key=[KEY]</dt> 
+					<dd> - sets a unique account key, that is generated during creation a new account on a server.</dd>
+					<dt>-server=[SERVER_NAME]</dt> 
+					<dd> 
+						- name of a server, where an agent is installed. Choose any name you wish, 
+						and server with this name will be automatically added to your account. 
+					</dd>
+					<dt>-fs=[FILESYSTEM]</dt>
+					<dd> - path to filesystem you wish to inspect. @*If option is not given, 
+							no data about file system will be sent *@
+					</dd>
+				</dl>
+				Other options: 
+				<dl> 
+					
+					<dt>-url=[SENTINEL_URL]</dt>
+					<dd> - URL of the Sentinel Web, where Sentinel agent will send system data. You must specify this option only if your have installed
+							 Sentinel Web on your local server.<br> 
+							 If option is not given, 
+							 Sentinel agent will send data to a http://sentinel.insign.ch
+					</dd>					
+					<dt>-help</dt>
+					<dd> - display help message </dd>
+					<dt>-verbose</dt>
+					<dd> - output all messages  </dd>
+									
+				</dl>
+				Examples:
+				<pre> % java -jar -Djava.library.path=./ sentinel.jar -key=J5Q0FIvYlb -server=MyServer -fs=/ </pre> 
+				<pre> % java -jar -Djava.library.path=./ sentinel.jar -key=DgPOPz34Hm -server=OtherServer -fs=c:\ -url=localhost:9000 </pre>
+				
+				
+			</p>
+			<p>
+				You may also want to add Sentinel agent to a crontab 
+				to send server's data to a sentinel website periodically.
+			</p>
+			<p>
+				If you are using Linux/Unix, this can be easily done with next steps:<br>
+				- run "crontab -e" and add next strings to your cron:
+				<pre>
+ SHELL=/bin/bash
+ 0-59 * * * * java -jar -Djava.library.path=/PATH/TO/SENTINEL/FOLDER /PATH/TO/SENTINEL/FOLDER/sentinel.jar  [OPTIONS...]</pre> 
+							
+			</p>
+			
+			<hr/>	
+						
+			<h1>Watching logs</h1>
+			<p>
+				Once the Sentinel agent is run, you can inspect your servers at
+				<code>@{ controllers.routes.Index.main().absoluteURL(request()) }account/YOUR_ACCOUNT_KEY/</code> <br>
+				where YOUR_ACCOUNT_KEY is a unique key, generated during creation of a new account.
+			</p> 
+		</div>
+	</span>
+</div>
+}

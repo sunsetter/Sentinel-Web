@@ -1,0 +1,195 @@
+@import "bootstrap/bootstrap.less";
+/* -- Template get by http://ajkochanowicz.github.com/Kickstrap/ -- */
+@import "cyborg/cyborg.less";
+@import "font-awesome.less";
+
+/* ------------------------------------ */
+/* -- header -- */
+
+@media (min-width: 1200px) {
+	header{
+		margin-top:50px;
+	}
+}
+
+/* ------------------------------------ */
+/* -- footer -- */
+
+footer{
+	padding: 15px 0px;
+	
+	p.start{
+		height: 26px;
+		padding-top: 3px;
+	}
+
+	p {
+		font-style: italic;
+		font-size: 12px;
+		color: #6E6E6E;
+		line-height: 15px;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		top: 5px;
+	}
+
+	ol {
+		margin: 0;
+		li {
+			float: left;
+			text-align: right;
+			list-style-type: none;
+			a {
+				background: url("../img/size_sprite.png") no-repeat scroll -3px 0 transparent;
+				float: left;
+				height: 28px;
+				opacity: 0.3;
+				overflow: hidden;
+				text-align: left;
+				text-indent: -9999px;
+			}
+		}
+		
+		li.desktop a {
+			width: 38px;
+		}
+		
+		li.tablet a {
+			background-position: -43px 0;
+			width: 31px;
+		}
+		
+		li.mobile a {
+			background-position: -74px 0;
+			margin-right: 10px;
+			width: 18px;
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	footer ol li.desktop a {
+		opacity: 1;
+	}
+	
+	footer ol li.mobile a,
+	footer ol li.tablet a {
+		opacity: 0.3;
+	}
+}
+
+@media (max-width: 768px) {
+	footer ol li.tablet a {
+		opacity: 1;
+	}
+}
+
+@media (max-width: 480px) {
+	footer ol li.mobile a {
+		opacity: 1;
+	}
+	
+	footer ol li.tablet a {
+		opacity: 0.3;
+	}
+}
+
+
+
+/* ------------------------------------ */
+/* -- global -- */
+.brand{
+	color: white;
+	background-color: #08C;
+	border-radius: 6px;
+	padding: 10px 20px 8px;
+}
+
+legend, label {
+	color: #EEE;
+}
+
+ul, ol {
+	padding: 0;
+	margin: 0;
+	display: block;
+	list-style: none;
+}
+
+.well{
+	padding: 5px;
+	color: #EEE;
+}
+
+
+h1{
+	padding: 10px 0;
+}
+
+h2, h3, h4{
+	padding: 0 0 5px 0;
+}
+
+.nav-list > li > a{
+	padding: 10px 5px;
+	.border-radius(5px);
+	font-size: 18px;
+	i{
+		margin-top: 3px;
+	}
+	
+	.status{
+		color:#222;
+		line-height: 18px;
+		padding: 3px 2px 3px 10px;
+		border-radius: 1em;
+		font-weight: bold;
+		font-size: 16px;
+		border: 1px solid #CCC;
+		background: #EEE;
+		font-weight: bold;
+		text-shadow: 0 1px 0 white;
+		background-image: -webkit-gradient(linear,left top,left bottom,from(white),to(#F1F1F1));
+		background-image: -webkit-linear-gradient(white,#F1F1F1);
+		background-image: -moz-linear-gradient(white,#F1F1F1);
+		background-image: -ms-linear-gradient(white,#F1F1F1);
+		background-image: -o-linear-gradient(white,#F1F1F1);
+		background-image: linear-gradient(white,#F1F1F1);
+		
+	}
+	
+}
+
+
+ul.nav-list.list{
+	li > a{
+		color: #EEE;
+		text-align: center;
+	}
+	li > a:hover{
+		background-color: #222;
+	}
+}
+
+.clear{
+	clear: both;
+}
+
+.close:hover {
+	color: #005580 !important;
+}
+ .close{
+	color: #08C !important;
+}
+
+.modal.fade.in {
+	top: 380px;
+}
+p{
+	color: #EEE;
+}
+
+
+//Responsive Styles
+@import "bootstrap/responsive.less";

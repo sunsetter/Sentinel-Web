@@ -1,0 +1,51 @@
+@(account: Account, selectedServer: Server, period: String, attributeName: String)
+
+@*layout(
+	title = selectedServer.name, 
+	historyBack = routes.Servers.show(account.hash, selectedServer.name, period)
+){
+*@
+<div class="row">	
+		<span class="span12">
+			<div class="well">
+				<ul class="nav nav-pills">
+				@for(periodItem <- Period.getList()){
+					<li @if(period.equals(periodItem.name) ){ class="active" }>
+						<a href="#@routes.Servers.showDiagram(account.hash, selectedServer.name, attributeName , periodItem.name)">@periodItem.name</a>
+					</li>
+				}
+				</ul>
+		
+				<p>
+					<strong> OS:  @selectedServer.osDescription </strong> <br> 
+					Added: 
+					<span class="timestamp" timestamp="@selectedServer.dateCreate.getTime()">
+						@selectedServer.dateCreate.format("yyyy-MM-dd HH:mm ")
+					</span>
+					<br> 
+					Last update: 
+					<span id="last-update" class="timestamp" timestamp="@Log.getLast(selectedServer.id).dateCreate.getTime()">
+						@Log.getLast(selectedServer.id).dateCreate.format("yyyy-MM-dd HH:mm ")
+					</span>
+				</p>
+
+			<div id="diagram" style="height:300px;">Loading...</div>
+
+		</div>
+		</span>
+	</div>    
+	
+<script type="text/javascript">
+		hashModule.pageTitle   = '@selectedServer.name';
+		hashModule.historyBack = '@routes.Servers.show(account.hash, selectedServer.name, period)';
+		flotrDiagram.update({
+			account_hash: '@account.hash',
+			server: '@selectedServer.name',
+			period: '@period',
+			attribute_name: '@attributeName'
+		});
+		fixTimeZone();
+</script>
+@*
+}
+*@

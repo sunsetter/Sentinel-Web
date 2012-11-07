@@ -1,0 +1,31 @@
+@( account: Account ) 
+
+@*layout(
+	title = "New Server", 
+	historyBack = routes.Accounts.show(account.hash) 
+){
+*@
+<div class="row">
+	<span class="span12">
+		<div class="well">
+			<h2>Add a new server</h2>
+			<p>Adding a new server is surprisingly simple: You just add the
+				sentinel agent to your server and run it.</p>
+			<p>No online configuration required, as soon as your server sends
+				data, it will appear in the Sentinel Dashboard.</p>
+			<p>
+				Now, when you have created your new account, you can proceed with 
+				<a class="external-link" href="http://sentinel.insign.ch/#install_agent" class="ui-link">
+				next step: downloading and setting up Sentinel agent</a> on your servers.				
+			</p>
+		</div>
+	</span>
+</div>
+
+<script type="text/javascript">
+		hashModule.pageTitle = 'New Server';
+		hashModule.historyBack = '@routes.Accounts.show(account.hash)';
+</script>
+@*
+}
+*@

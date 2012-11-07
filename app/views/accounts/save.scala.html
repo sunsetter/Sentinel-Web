@@ -1,0 +1,29 @@
+@(accountForm: Form[Account])
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInlineInput.render) } 
+
+
+@layout(title = "Sentinel Web") {
+<div class="row">		
+	<span class="span4">
+    @helper.form(action = routes.Accounts.save(), 'class -> "well form-inline") {
+		<fieldset>
+			<legend>Create a new account</legend>
+			@helper.inputText(
+				accountForm("name"), 
+				'_label-> "Account name:",
+				'_help -> ""
+			)		
+			<input type="submit" value="Create" class="btn btn-primary">
+		</fieldset>
+	}
+	</span>
+	<span  class="span4">
+		<div class="well">
+		 <i class="icon-info-sign"></i> Your <strong>account name</strong> is what appears at the top of your browser tab,
+		on your navigation menus throughout your account side of the site.
+		</div>
+		
+	</span> 
+}

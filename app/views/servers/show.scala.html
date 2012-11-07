@@ -1,0 +1,105 @@
+@(account: Account, selectedServer: Server, period:String, logStat: List[LogStat])
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInlineInput.render) } 
+
+@*layout(
+	title = selectedServer.name, 
+	historyBack = routes.Accounts.show(account.hash)
+){
+*@
+	
+	<div class="row">	
+		@if( account.serverItems.size() > 0 ){		
+		<span class="span12">
+			<div class="well">
+				<a href="#@routes.Servers.confirmDelete(account.hash, selectedServer.name)" class="close" title="Delete server" data-toggle="modal">&times;</a>
+				
+				@if(Log.getLast(selectedServer.id) !=null){
+					<ul class="nav nav-pills">
+					@for(periodItem <- Period.getList()){
+						<li @if(period.equals(periodItem.name) ){ class="active" }>
+							<a href="#@routes.Servers.show(account.hash, selectedServer.name, periodItem.name)">@periodItem.name</a>
+						</li>
+					}
+					</ul>		
+					
+					<p>
+						<strong> OS: @selectedServer.osDescription </strong> <br> 
+						Added: 
+						<span class="timestamp" timestamp="@selectedServer.dateCreate.getTime()">
+							@selectedServer.dateCreate.format("yyyy-MM-dd HH:mm ")
+						</span>
+						<br> 
+						Last update: 
+						<span class="timestamp" timestamp="@Log.getLast(selectedServer.id).dateCreate.getTime()">
+							@Log.getLast(selectedServer.id).dateCreate.format("yyyy-MM-dd HH:mm ")
+						</span>
+					</p>
+					@if( logStat == null ){
+						<p> No logs found for a given period </p>
+					}else{		
+					<ul class="nav nav-list list">
+					@for(log <- logStat) {
+						<li>
+							<a href="#@routes.Servers.showDiagram(account.hash, selectedServer.name, log.attribute , period)">
+								<p class="pull-left">
+									@if(log.value < 75 ){ 
+										<i class="icon-thumbs-up"></i>
+									 }else{ <i class="icon-thumbs-down"></i>	 } 
+									 @log.attribute Usage
+								</p> 
+								<span
+									@if(log.value < 75 ){ 
+										style="color: rgb(0, 128, 0); "
+									}else{ 
+										style="color: rgb(255, 102, 0); "
+									} 	
+								>								
+									@String.format("%.2f",log.value)%
+								</span>
+								<p class="pull-right">
+									<i class=" icon-chevron-right"></i>
+								</p>
+							</a>
+						</li>	
+						@if( selectedServer.getAttributeByName(log.attribute) !=null ){
+							<li style="text-align:center;">
+								<p class="pull-left">
+									&nbsp
+								</p> 
+								<span style="margin-left:90px; color: rgb(102, 102, 102);">
+									@{ 
+										val totalValue = log.value * selectedServer.getAttributeByName(log.attribute).value /100;
+										"%.2f" format totalValue
+									} 
+									of 
+									@String.format("%.1f", selectedServer.getAttributeByName(log.attribute).value) Gb
+								</span>
+								<p class="pull-right">
+									&nbsp
+								</p>							
+							</li>
+						}
+					} 
+					
+					</ul>
+					}
+				}else{
+					<p>No Data found.</p>
+				}
+				
+			</div>
+		</span>
+		}
+	</div>
+	
+	<script type="text/javascript">
+		hashModule.pageTitle = '@selectedServer.name';
+		hashModule.historyBack = '@routes.Accounts.show(account.hash)';
+		fixTimeZone();
+	</script>
+@*
+}
+*@
+

@@ -1,0 +1,29 @@
+@(account: Account)
+
+<h2>Server</h2>
+<ul class="nav nav-list">
+	@for(server <- account.serverItems) {
+		<li >
+			<a href="#@routes.Servers.show(account.hash, server.name, "Now")">
+				<i class="icon-fire"></i> @server.name
+				<p class="pull-right">
+				@if( Log.getLast(server.id) == null ){
+					<span class="status alert alert-info"> No Data <i class="icon-flag"></i></span> 
+				}else{
+					@if( server.hasProblems() ) {
+						<span class="status alert alert-success"> Problem <i class="icon-remove"></i></span>
+					}else{
+						<span class="status alert alert-success"> Ok <i class="icon-ok"></i></span>
+					}			        
+				}		
+					<i class=" icon-chevron-right"></i>		
+				</p>
+			</a>
+		</li>
+	}
+</ul>
+<br />
+<p class="pull-right">
+	<a href="#@routes.Servers.add(account.hash)" class="btn btn-large"><i class="icon-plus"></i> ADD SERVER</a>
+</p>
+<div class="clear"></div>
